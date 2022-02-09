@@ -6,7 +6,7 @@
 //  Copyright © 2019 The App Brewery. All rights reserved.
 //
 
-/* orignial code
+// orignial code
 import UIKit
 import AVFoundation //allows audio
 
@@ -22,12 +22,15 @@ class ViewController: UIViewController {
     
     @IBAction func keyPressed(_ sender: UIButton) {
         
-        playSound()
+        playSound(soundName: sender.currentTitle!)
+        sender.alpha = 0.5
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            sender.alpha = 1.0
     }
     
-    func playSound() {
-        guard let url = Bundle.main.url(forResource: "C", withExtension: "wav") else { return }
+        func playSound(soundName : String) {
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
         
         do{
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default) //allows sound to play despite silent mode
@@ -36,7 +39,7 @@ class ViewController: UIViewController {
             /* the following line is required for the player to work on iOS 11.
              Change the file type accordingly*/
             
-            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            player = try! AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
             
             /* iOS 10 and earlier require the following line:
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint:
@@ -51,8 +54,9 @@ class ViewController: UIViewController {
     }
     
 }
-*/
+}
 
+/*
 import UIKit
 import AVFoundation
 
@@ -81,3 +85,4 @@ class ViewController: UIViewController {
                 
     }
 }
+*/
